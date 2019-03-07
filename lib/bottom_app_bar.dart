@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'each_view.dart';
 
 // stful 动态widget代码快速生成
 
@@ -11,11 +12,29 @@ class BottomAppBarDemo extends StatefulWidget {
 }
 
 class _BottomAppBarDemoState extends State<BottomAppBarDemo> {
+  List<Widget> _eachView;
+  int _index = 0;
+  @override
+  void initState() {// 初始化状态方法
+    // TODO: implement initState
+    super.initState();
+    _eachView = List();
+    _eachView..add(EachView('HOME'))..add(EachView('Airplay'));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: _eachView[_index],
       floatingActionButton: FloatingActionButton( // fab 可交互浮动按钮
-        onPressed: (){},
+        onPressed: (){
+          Navigator.of(context).push(
+           MaterialPageRoute(
+             builder: (BuildContext context){
+               return EachView('New page');
+             }
+           )
+          );
+        },
         tooltip: '提示tooltip 长按显示',
         child: Icon(
           Icons.add,
@@ -33,12 +52,20 @@ class _BottomAppBarDemoState extends State<BottomAppBarDemo> {
             IconButton(
               icon: Icon(Icons.home),
               color: Colors.white,
-              onPressed: (){},
+              onPressed: (){
+                setState(() {
+                  _index = 0;
+                });
+              },
             ),
             IconButton(
               icon: Icon(Icons.airplay),
               color: Colors.white,
-              onPressed: (){},
+              onPressed: (){
+                setState(() {
+                  _index = 1;
+                });
+              },
             ),
           ],
         ),
